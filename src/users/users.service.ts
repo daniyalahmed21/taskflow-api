@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common"
+import { CreateUserDto } from "./dto/create-user.dto"
 
 @Injectable()
 export class UsersService {
@@ -8,12 +9,9 @@ export class UsersService {
         return this.users
     }
 
-    create(user: any) {
-        if (user) {
-            this.users.push(user)
-            return this.users
-        }
-        return "Please provide name and email"
+    create(user: CreateUserDto) {
+        this.users.push(user);
+        return user;
     }
 
 }
