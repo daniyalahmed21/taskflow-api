@@ -18,6 +18,6 @@ export class Task {
     @ManyToOne(() => Project, project => project.tasks)
     project: Project;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, user => user.tasks)
     assignee: User;
 }

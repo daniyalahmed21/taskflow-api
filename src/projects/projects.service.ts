@@ -11,7 +11,9 @@ export class ProjectsService {
     ) { }
 
     findAll() {
-        return this.projectRepository.find()
+        return this.projectRepository.find({
+            relations: ['owner', 'tasks']
+        })
     }
 
     create(createProjectDto) {

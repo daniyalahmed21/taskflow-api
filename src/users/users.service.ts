@@ -20,4 +20,8 @@ export class UsersService {
         return this.userRepository.save(user);
     }
 
+    findOneEmail(email: string) {
+        return this.userRepository.findOneBy({ email });
+    }
+
 }
