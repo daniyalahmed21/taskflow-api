@@ -18,4 +18,7 @@ export class User {
 
     @OneToMany(() => Project, (project) => project.owner)
     projects: Project[]
+
+    @Column({ default: 'user' })
+    role: string;
 }

@@ -24,4 +24,8 @@ export class UsersService {
         return this.userRepository.findOneBy({ email });
     }
 
+    remove(id: number) {
+        return this.userRepository.delete(id);
+    }
+
 }

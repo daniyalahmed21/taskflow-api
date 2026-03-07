@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('users')
 export class UsersController {
@@ -26,5 +28,19 @@ export class UsersController {
     @Get('profile')
     getProfile(@Request() req) {
         return req.user
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
+    @Get('admin')
+    getAdmin() {
+        return 'Admin only'
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
+    @Delete(':id')
+    deleteUser(@Param('id') id: string) {
+        return this.usersService.remove(+id);
     }
 }
