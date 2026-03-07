@@ -1,7 +1,8 @@
 import { Task } from "src/tasks/entities/task.entity"
 import { User } from "src/users/entities/user.entity"
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
+@Entity('projects')
 export class Project {
     @PrimaryGeneratedColumn()
     id: number
