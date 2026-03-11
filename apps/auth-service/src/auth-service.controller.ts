@@ -6,7 +6,8 @@ export class AuthServiceController {
   constructor(private readonly authServiceService: AuthServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.authServiceService.getHello();
+  async register(): Promise<string> {
+    await this.authServiceService.register({ id: 1, email: 'user1@example.com' });
+    return 'User registered';
   }
 }

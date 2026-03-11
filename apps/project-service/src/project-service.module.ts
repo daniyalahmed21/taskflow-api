@@ -1,10 +1,28 @@
 import { Module } from '@nestjs/common';
 import { ProjectServiceController } from './project-service.controller';
-import { ProjectServiceService } from './project-service.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ProjectService } from './project-service.service';
 
 @Module({
-  imports: [],
+  imports: [
+    ClientsModule.register([
+      {
+        name: 'KAFKA_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'project-service',
+            brokers: ['localhost:9092'],
+            allowAutoCreateTopics: true,
+          },
+          consumer: {
+            groupId: 'project-service-consumer',
+          },
+        },
+      },
+    ]),
+  ],
   controllers: [ProjectServiceController],
-  providers: [ProjectServiceService],
+  providers: [ProjectService],
 })
-export class ProjectServiceModule {}
+export class ProjectServiceModule { }

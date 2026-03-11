@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { TaskServiceService } from './task-service.service';
+import { TaskService } from './task-service.service';
 
 @Controller()
 export class TaskServiceController {
-  constructor(private readonly taskServiceService: TaskServiceService) {}
+  constructor(private readonly taskService: TaskService) { }
 
   @Get()
-  getHello(): string {
-    return this.taskServiceService.getHello();
+  async createTask(): Promise<string> {
+    await this.taskService.createTask({ id: 1, title: 'Task 1', assignedTo: 1 });
+    return 'Task created';
   }
 }
