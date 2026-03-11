@@ -1,12 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
-import { NotificationServiceService } from './notification-service.service';
+import { Controller } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
 
 @Controller()
-export class NotificationServiceController {
-  constructor(private readonly notificationServiceService: NotificationServiceService) {}
+export class NotificationConsumerController {
 
-  @Get()
-  getHello(): string {
-    return this.notificationServiceService.getHello();
+  @EventPattern('user_created')
+  handleUserCreated(@Payload() data: any) {
+    console.log('Send welcome email to:', data.email);
   }
 }
