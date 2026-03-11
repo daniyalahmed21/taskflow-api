@@ -7,9 +7,7 @@ export class AuthServiceService {
 
   async register(user: { id: number; email: string }) {
     try {
-      console.log('[AUTH] User registered, emitting user_created event...');
       await this.kafkaClient.emit('user_created', user);
-      console.log('[AUTH] Event emitted successfully');
     } catch (error) {
       console.log('[AUTH] Error:', error);
     }

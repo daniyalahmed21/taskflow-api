@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AuthServiceService } from './auth-service.service';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class AuthServiceController {
-  constructor(private readonly authServiceService: AuthServiceService) {}
+  constructor(private readonly authServiceService: AuthServiceService) { }
 
-  @Get()
-  async register(): Promise<string> {
-    await this.authServiceService.register({ id: 1, email: 'user1@example.com' });
+  @MessagePattern('register_user')
+  async register(data: any): Promise<string> {
+    await this.authServiceService.register(data);
     return 'User registered';
   }
 }

@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { ProjectService } from './project-service.service';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class ProjectServiceController {
   constructor(private readonly projectService: ProjectService) { }
 
-  @Get()
-  async createProject(): Promise<string> {
-    await this.projectService.createProject({ id: 1, name: 'Project 1' });
+  @MessagePattern('create_project')
+  async createProject(data: any): Promise<string> {
+    await this.projectService.createProject(data);
     return 'Project created';
   }
 }
