@@ -3,10 +3,7 @@ import { NotificationServiceModule } from './notification-service.module';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(NotificationServiceModule);
-
-  // Configure Kafka Microservice
-  app.connectMicroservice<MicroserviceOptions>({
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(NotificationServiceModule, {
     transport: Transport.KAFKA,
     options: {
       client: {
@@ -18,8 +15,7 @@ async function bootstrap() {
     },
   });
 
-  await app.startAllMicroservices();
-  await app.listen(process.env.port ?? 3004);
+  await app.listen();
   console.log('Notification Service is running on port 3004 and listening for Kafka events');
 }
 
